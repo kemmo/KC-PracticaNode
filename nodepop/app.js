@@ -10,6 +10,9 @@ var users = require('./routes/users');
 
 var app = express();
 
+//Cargamos el conector a BBDD
+require('./lib/connectMongoose');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
