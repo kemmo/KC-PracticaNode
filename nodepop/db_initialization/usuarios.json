@@ -1,0 +1,14 @@
+{                          
+    "usuarios": [
+        {
+            "nombre": "admin",
+            "email": "admin@nodepop.com",
+            "clave": "password"
+        },
+        {
+            "nombre": "Jorge",
+            "email": "noto89@gmail.com",
+            "clave": "jorgekeepcoding"
+        }
+    ]
+}    

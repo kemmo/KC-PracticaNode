@@ -4,7 +4,8 @@
 
 const mongoose = require('mongoose');
 const conn = mongoose.connection;
-const Anuncio = require('../models/Anuncio');
+const Anuncio = require('../modelos/Anuncio');
+const Usuario = require('../modelos/Usuario');
 
 const fs = require('fs');
 
@@ -92,9 +93,10 @@ async function populateAnuncios() {
     }
 }
 
-function populateUsuarios() {
-    return new Promise((resolve, reject) => {
-        //TODO: Populate with users
-        resolve();
-    });        
+async function populateUsuarios() {
+    let json = JSON.parse(fs.readFileSync(__dirname + "/usuarios.json", 'utf8')).usuarios;
+
+    for (let i = 0; i < json.length; i++){
+        await new Usuario(json[i]).save();
+    }
 }
