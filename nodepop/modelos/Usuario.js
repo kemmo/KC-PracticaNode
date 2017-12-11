@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 //TODO: Create indexes
 const usuarioSchema = mongoose.Schema({
     nombre: String,
-    email: String,
+    email: { type: String, unique: true},
     clave: String
 });
 
