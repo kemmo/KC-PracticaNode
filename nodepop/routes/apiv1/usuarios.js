@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const Usuario = require('../../modelos/Usuario');
 const shajs = require('sha.js')
-const jwt = require('jsonwebtoken');
+const {authenticate} = require('../../lib/authenticate');
 
 /**
  * POST /registro
@@ -29,26 +29,10 @@ router.post('/registro', async (req, res, next) => {
 router.post('/login', async (req, res, next) => {
     try {
         const _email = req.body.email;
-        const _password = req.body.clave;
-        const user = await Usuario.findOne({ email: _email}).exec();
+        const _clave = req.body.clave;
 
-        if (user.email !== _email || user.clave !== new shajs.sha256().update(_password).digest('hex')) {
-            res.status = 401;
-            res.json({ error: 'Credenciales incorrectas' });
-
-            return;
-        }
-
-        jwt.sign({ user_id: user._id }, process.env.JWT_SECRET, {
-            expiresIn: process.env.JWT_EXPIRES_IN
-        }, (err, token) => {
-            if (err) {
-                next(err);
-                return;
-            }
-
-            res.json({success: true, token: token});
-        });
+        let token = await authenticate(_email, _clave);
+        res.json({success: true, token: token});
     } catch (err) {
         next(err);
     }
