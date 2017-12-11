@@ -6,8 +6,8 @@ const mongoose = require('mongoose');
 const conn = mongoose.connection;
 const Anuncio = require('../modelos/Anuncio');
 const Usuario = require('../modelos/Usuario');
-
 const fs = require('fs');
+const shajs = require('sha.js')
 
 mongoose.Promise = global.Promise;
 
@@ -97,6 +97,9 @@ async function populateUsuarios() {
     let json = JSON.parse(fs.readFileSync(__dirname + "/usuarios.json", 'utf8')).usuarios;
 
     for (let i = 0; i < json.length; i++){
-        await new Usuario(json[i]).save();
+        let user = new Usuario(json[i]);
+        user.clave = new shajs.sha256().update(json[i].clave).digest('hex')
+
+        await user.save();
     }
 }
