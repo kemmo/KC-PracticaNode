@@ -6,7 +6,7 @@ const conn = mongoose.connection;
 mongoose.Promise = global.Promise;
 
 conn.on('error', err => {
-    console.log('Error!', err);
+    console.log('Error MongoDB', err);
     process.exit(1);
 });
 

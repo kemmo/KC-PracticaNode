@@ -5,6 +5,7 @@ const router = express.Router();
 const Usuario = require('../../modelos/Usuario');
 const {authenticate} = require('../../lib/authenticate');
 const {getSHA256FromString} = require('../../lib/hash');
+const CustomError = require('../../modelos/CustomError');
 
 /**
  * POST /registro
@@ -18,7 +19,13 @@ router.post('/registro', async (req, res, next) => {
         let userCreated = await user.save();
         res.json({ success: true, result: userCreated });
     } catch(err) {
-        next(err);
+        console.log('Error when POST /usuarios/registro', err);
+
+        if (err.code === 11000) {
+            next(new CustomError("Email already exist", 409));
+        } else {
+            next(new CustomError("Undefined error", 500));
+        }
     }
 });
 
@@ -34,7 +41,13 @@ router.post('/login', async (req, res, next) => {
         let token = await authenticate(_email, _clave);
         res.json({success: true, token: token});
     } catch (err) {
-        next(err);
+        console.log('Error when POST /usuarios/login', err);
+
+        if(err instanceof CustomError) {
+            next(err);
+        } else {
+            next(new CustomError("Undefined error", 500));
+        }
     }
 });
 
