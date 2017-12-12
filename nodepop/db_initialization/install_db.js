@@ -7,7 +7,7 @@ const conn = mongoose.connection;
 const Anuncio = require('../modelos/Anuncio');
 const Usuario = require('../modelos/Usuario');
 const fs = require('fs');
-const shajs = require('sha.js')
+const {getSHA256FromString} = require('../lib/hash');
 
 mongoose.Promise = global.Promise;
 
@@ -98,7 +98,7 @@ async function populateUsuarios() {
 
     for (let i = 0; i < json.length; i++){
         let user = new Usuario(json[i]);
-        user.clave = new shajs.sha256().update(json[i].clave).digest('hex')
+        user.clave = getSHA256FromString(json[i].clave);
 
         await user.save();
     }

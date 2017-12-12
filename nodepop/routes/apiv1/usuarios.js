@@ -3,8 +3,8 @@
 const express = require('express');
 const router = express.Router();
 const Usuario = require('../../modelos/Usuario');
-const shajs = require('sha.js')
 const {authenticate} = require('../../lib/authenticate');
+const {getSHA256FromString} = require('../../lib/hash');
 
 /**
  * POST /registro
@@ -13,7 +13,7 @@ const {authenticate} = require('../../lib/authenticate');
 router.post('/registro', async (req, res, next) => {
     try {
         let user = new Usuario(req.body);
-        user.clave = new shajs.sha256().update(user.clave).digest('hex')
+        user.clave = getSHA256FromString(user.clave);
 
         let userCreated = await user.save();
         res.json({ success: true, result: userCreated });

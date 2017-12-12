@@ -2,13 +2,13 @@
 
 const jwt = require('jsonwebtoken');
 const Usuario = require('../modelos/Usuario');
-const shajs = require('sha.js')
+const {getSHA256FromString} = require('./hash');
 
 module.exports.authenticate = function (email, clave) {
     return new Promise((resolve, reject) => {
         Usuario.findOne({ email: email }).exec()
         .then((user) => {
-            if (user.email !== email || user.clave !== new shajs.sha256().update(clave).digest('hex')) {
+            if (user.email !== email || user.clave !== getSHA256FromString(clave)) {
                 //TODO: Reject with a "401 Invalid credentials" error
                 reject();
             }
