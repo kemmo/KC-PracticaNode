@@ -12,6 +12,8 @@ const CustomError = require('../../modelos/CustomError');
  * Crear un nuevo usuario
  */
 router.post('/registro', async (req, res, next) => {
+    let locale = req.get("Accept-Language");
+
     try {
         let user = new Usuario(req.body);
         user.clave = getSHA256FromString(user.clave);
@@ -22,9 +24,9 @@ router.post('/registro', async (req, res, next) => {
         console.log('Error when POST /usuarios/registro', err);
 
         if (err.code === 11000) {
-            next(new CustomError("Email already exist", 409));
+            next(new CustomError("Email already exist", 409, locale));
         } else {
-            next(new CustomError("Undefined error", 500));
+            next(new CustomError("Undefined error", 500, locale));
         }
     }
 });
@@ -34,11 +36,13 @@ router.post('/registro', async (req, res, next) => {
  * Loguear un usuario
  */
 router.post('/login', async (req, res, next) => {
+    let locale = req.get("Accept-Language");
+
     try {
         const _email = req.body.email;
         const _clave = req.body.clave;
 
-        let token = await authenticate(_email, _clave);
+        let token = await authenticate(_email, _clave, locale);
         res.json({success: true, token: token});
     } catch (err) {
         console.log('Error when POST /usuarios/login', err);
@@ -46,7 +50,7 @@ router.post('/login', async (req, res, next) => {
         if(err instanceof CustomError) {
             next(err);
         } else {
-            next(new CustomError("Undefined error", 500));
+            next(new CustomError("Undefined error", 500, locale));
         }
     }
 });

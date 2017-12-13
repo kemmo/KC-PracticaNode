@@ -1,0 +1,8 @@
+{
+	"Invalid credentials": "Invalid credentials",
+	"Login error": "Login error",
+	"No token provided": "No token provided",
+	"Invalid token": "Invalid token",
+	"Email already exist": "Email already exist",
+	"Undefined error": "Undefined error"
+}

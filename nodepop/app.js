@@ -8,10 +8,20 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 
+var i18n = require('i18n');
+
 var app = express();
 
 //Cargamos el conector a BBDD
 require('./lib/connectMongoose');
+
+//i18n
+i18n.configure({
+  locales:['es', 'en'],
+  directory: __dirname + '/locales'
+});
+
+app.use(i18n.init);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

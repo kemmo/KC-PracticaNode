@@ -1,7 +1,15 @@
 'use strict';
 
-function CustomError(message, status) {
-    this.message = message;
+const i18n = require('i18n');
+
+function CustomError(message, status, locale) {
+    if (locale != undefined) {
+        i18n.setLocale(locale);
+    } else {
+        i18n.setLocale("en");
+    }
+
+    this.message = i18n.__(message);
     this.status = status;
 }
 
