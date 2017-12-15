@@ -18,7 +18,14 @@ router.get('/', async (req, res, next) => {
         const token = req.query.token;
         await validateToken(token, locale);
 
-        let rows = await Anuncio.find().exec();
+        const filter = {};
+
+        const venta = req.query.venta;
+        if (venta) {
+            filter.venta = venta;
+        }
+
+        let rows = await Anuncio.list(filter);
         res.json({ success: true, result: rows });
     } catch(err) {
         console.log('Undefined error when GET /anuncios/', err);

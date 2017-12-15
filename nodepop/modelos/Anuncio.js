@@ -30,6 +30,11 @@ const anuncioSchema = mongoose.Schema({
     }
 });
 
+anuncioSchema.statics.list = function(filters) {
+    const query = Anuncio.find(filters);
+    return query.exec();
+}
+
 anuncioSchema.index({ nombre: 1 });
 
 const Anuncio = mongoose.model('Anuncio', anuncioSchema);
