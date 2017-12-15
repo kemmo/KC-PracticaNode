@@ -2,11 +2,23 @@
 
 const mongoose = require('mongoose');
 
-//TODO: Create indexes
+//TODO: i18n to error messages
 const usuarioSchema = mongoose.Schema({
-    nombre: String,
-    email: { type: String, unique: true},
-    clave: String
+    nombre: {
+        type: String,
+        required: [true, 'Name mandatory']
+    },
+    email: {
+        type: String,
+        index: true,
+        required: [true, 'Email mandatory'],
+        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Wrong email'],
+        unique: true
+    },
+    clave: {
+        type: String,
+        required: [true, 'Password mandatory']
+    }
 });
 
 const Usuario = mongoose.model('Usuario', usuarioSchema);

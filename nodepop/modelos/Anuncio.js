@@ -3,13 +3,34 @@
 const mongoose = require('mongoose');
 
 //TODO: Create indexes
+//TODO: i18n to error messages
 const anuncioSchema = mongoose.Schema({
-    nombre: String,
-    venta: Boolean,
-    precio: Number,
+    nombre: {
+        type: String,
+        index: true,
+        required: [true, 'Name mandatory']
+    },
+    venta: {
+        type: Boolean,
+        index: true,
+        required: [true, 'Venta mandatory']
+    },
+    precio: {
+        type: Number,
+        index: true,
+        required: [true, 'Price mandatory']
+    },
     foto: String,
-    tags: [String]
+    tags: {
+        type: [{
+            type: String,
+            enum: ['work', 'lifestyle', 'motor', 'mobile']
+        }],
+        index: true
+    }
 });
+
+anuncioSchema.index({ nombre: 1 });
 
 const Anuncio = mongoose.model('Anuncio', anuncioSchema);
 

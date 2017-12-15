@@ -5,7 +5,7 @@
             "venta": true,
             "precio": 230.15,
             "foto": "images/anuncios/bici.jpg",
-            "tags": [   "lifestyle",   "motor"]
+            "tags": ["lifestyle", "motor"]
         },
         {
             "nombre": "iPhone 3GS",
