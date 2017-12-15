@@ -25,7 +25,10 @@ router.get('/', async (req, res, next) => {
             filter.venta = venta;
         }
 
-        let rows = await Anuncio.list(filter);
+        const start = parseInt(req.query.start);
+        const limit = parseInt(req.query.limit);
+
+        let rows = await Anuncio.list(filter, start, limit);
         res.json({ success: true, result: rows });
     } catch(err) {
         console.log('Undefined error when GET /anuncios/', err);
