@@ -30,6 +30,11 @@ router.get('/', async (req, res, next) => {
             filter.venta = venta;
         }
 
+        const nombre = req.query.nombre;
+        if (nombre) {
+            filter.nombre = new RegExp('^' + req.query.nombre, "i");
+        }
+
         const start = parseInt(req.query.start);
         const limit = parseInt(req.query.limit);
 
