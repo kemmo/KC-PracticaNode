@@ -36,6 +36,16 @@ router.get('/', async (req, res, next) => {
             filter.nombre = new RegExp('^' + req.query.nombre, "i");
         }
 
+        const priceGreater = parseInt(req.query.precioMin);
+        const priceLess = parseInt(req.query.precioMax);
+        if (priceGreater && priceLess) {
+            filter.precio = { $gte: priceGreater, $lte: priceLess };
+        } else if (priceGreater) {
+            filter.precio = { $gte: priceGreater };
+        } else if (priceLess) {
+            filter.precio = { $lte: priceLess };
+        }
+
         const start = parseInt(req.query.start);
         const limit = parseInt(req.query.limit);
 
