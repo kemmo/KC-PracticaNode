@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const Anuncio = require('../../modelos/Anuncio');
+const {availableTags} = require('../../modelos/Anuncio');
 const {validateToken} = require('../../lib/authenticate');
 const CustomError = require('../../modelos/CustomError');
 const i18n = require('i18n');
@@ -44,6 +45,15 @@ router.get('/', async (req, res, next) => {
         console.log('Undefined error when GET /anuncios/', err);
         next(new CustomError("Undefined error", 500, locale));
     }
+});
+
+
+/**
+ * GET /anuncios/tags
+ * Obtener lista de tags disponibles
+ */
+router.get('/tags', (req, res, next) => {
+    res.json({ success: true, result: availableTags });
 });
 
 module.exports = router;

@@ -2,7 +2,8 @@
 
 const mongoose = require('mongoose');
 
-//TODO: Create indexes
+const availableTags = ['work', 'lifestyle', 'motor', 'mobile'];
+
 //TODO: i18n to error messages
 const anuncioSchema = mongoose.Schema({
     nombre: {
@@ -24,7 +25,7 @@ const anuncioSchema = mongoose.Schema({
     tags: {
         type: [{
             type: String,
-            enum: ['work', 'lifestyle', 'motor', 'mobile']
+            enum: availableTags
         }],
         index: true
     }
@@ -43,3 +44,4 @@ anuncioSchema.index({ nombre: 1 });
 const Anuncio = mongoose.model('Anuncio', anuncioSchema);
 
 module.exports = Anuncio;
+module.exports.availableTags = availableTags;
