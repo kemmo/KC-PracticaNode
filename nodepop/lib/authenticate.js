@@ -11,7 +11,7 @@ module.exports.authenticate = (email, clave, locale) => {
         .then((user) => {
             if (user.clave !== getSHA256FromString(clave)) {
                 console.log(`Invalid credentials for ${email} with password ${clave}`);
-                reject(new CustomError("Invalid credentials", 401, locale));
+                reject(new CustomError(["Invalid credentials"], 401, locale));
             }
     
             jwt.sign({ user_id: user._id }, process.env.JWT_SECRET, {
@@ -19,14 +19,14 @@ module.exports.authenticate = (email, clave, locale) => {
             }, (err, token) => {
                 if (err) {
                     console.log(`Error generating token for ${email} with password ${clave}`, err);
-                    reject(new CustomError("Login error", 401, locale));
+                    reject(new CustomError(["Login error"], 401, locale));
                 }
                 
                 resolve(token);
             });
         }).catch(err => {
             console.log('Undefined error when login', err);
-            reject(new CustomError("Login error", 401, locale));
+            reject(new CustomError(["Login error"], 401, locale));
         });
     });
 }
@@ -34,14 +34,14 @@ module.exports.authenticate = (email, clave, locale) => {
 module.exports.validateToken = (token, locale) => {
     return new Promise((resolve, reject) => {
         if (!token) {
-            reject(new CustomError("No token provided", 401, locale));
+            reject(new CustomError(["No token provided"], 401, locale));
         }
 
         jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
             if (err) {
-                reject(new CustomError("Invalid token", 401, locale));
+                reject(new CustomError(["Invalid token"], 401, locale));
             }
-            // TODO: decoded.user_id nos da el usuario que se ha validado
+
             resolve();
         });
     });

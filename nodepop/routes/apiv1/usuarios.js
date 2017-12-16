@@ -16,6 +16,11 @@ router.post('/registro', async (req, res, next) => {
 
     try {
         let user = new Usuario(req.body);
+
+        if (!user.clave) {
+            next(new CustomError(["Password mandatory"], 400, locale));
+        }
+
         user.clave = getSHA256FromString(user.clave);
 
         let userCreated = await user.save();
@@ -23,10 +28,19 @@ router.post('/registro', async (req, res, next) => {
     } catch(err) {
         console.log('Error when POST /usuarios/registro', err);
 
-        if (err.code === 11000) {
-            next(new CustomError("Email already exist", 409, locale));
+        if (err.name === 'ValidationError') {
+            let errorMessages = []
+
+            var keys = Object.keys(err.errors);
+            for (let i = 0; i < keys.length; i++){
+                errorMessages.push(err.errors[keys[i]])
+            }
+
+            next(new CustomError(errorMessages, 400, locale));
+        } else if (err.code === 11000) {
+            next(new CustomError(["Email already exist"], 409, locale));
         } else {
-            next(new CustomError("Undefined error", 500, locale));
+            next(new CustomError(["Undefined error"], 500, locale));
         }
     }
 });
@@ -39,10 +53,18 @@ router.post('/login', async (req, res, next) => {
     let locale = req.get("Accept-Language");
 
     try {
-        const _email = req.body.email;
-        const _clave = req.body.clave;
+        const email = req.body.email;
+        const clave = req.body.clave;
 
-        let token = await authenticate(_email, _clave, locale);
+        if (!email) {
+            next(new CustomError(["Email mandatory"], 401, locale));
+        }
+
+        if (!clave) {
+            next(new CustomError(["Password mandatory"], 401, locale));
+        }
+
+        let token = await authenticate(email, clave, locale);
         res.json({success: true, token: token});
     } catch (err) {
         console.log('Error when POST /usuarios/login', err);
@@ -50,7 +72,7 @@ router.post('/login', async (req, res, next) => {
         if(err instanceof CustomError) {
             next(err);
         } else {
-            next(new CustomError("Undefined error", 500, locale));
+            next(new CustomError(["Undefined error"], 500, locale));
         }
     }
 });

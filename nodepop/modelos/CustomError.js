@@ -2,14 +2,20 @@
 
 const i18n = require('i18n');
 
-function CustomError(message, status, locale) {
+function CustomError(messages, status, locale) {
     if (locale != undefined) {
         i18n.setLocale(locale);
     } else {
-        i18n.setLocale("en");
+        i18n.setLocale("es");
     }
 
-    this.message = i18n.__(message);
+    let finalErrorMessage = [];
+    for (let i = 0; i < messages.length; i++){
+        let msg = i18n.__(String(messages[i]));
+        finalErrorMessage.push(msg);
+    }
+
+    this.message = finalErrorMessage;
     this.status = status;
 }
 

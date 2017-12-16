@@ -9,7 +9,7 @@ const CustomError = require('../../modelos/CustomError');
 const i18n = require('i18n');
 
 /**
- * GET /anuncios
+ * GET /
  * Obtener lista de anuncios
  */
 router.get('/', async (req, res, next) => {
@@ -53,7 +53,12 @@ router.get('/', async (req, res, next) => {
         res.json({ success: true, result: rows });
     } catch(err) {
         console.log('Undefined error when GET /anuncios/', err);
-        next(new CustomError("Undefined error", 500, locale));
+
+        if(err instanceof CustomError) {
+            next(err);
+        } else {
+            next(new CustomError(["Undefined error"], 500, locale));
+        }
     }
 });
 
