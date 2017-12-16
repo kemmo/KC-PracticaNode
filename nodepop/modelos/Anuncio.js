@@ -34,6 +34,7 @@ anuncioSchema.statics.list = function(filters, start, limit) {
     const query = Anuncio.find(filters);
     query.skip(start);
     query.limit(limit);
+
     return query.exec();
 }
 

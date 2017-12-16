@@ -20,6 +20,11 @@ router.get('/', async (req, res, next) => {
 
         const filter = {};
 
+        const tag = req.query.tag;
+        if (tag) {
+            filter.tags = tag;
+        }
+
         const venta = req.query.venta;
         if (venta) {
             filter.venta = venta;
