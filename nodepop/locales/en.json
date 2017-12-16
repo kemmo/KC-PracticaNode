@@ -4,5 +4,11 @@
 	"No token provided": "No token provided",
 	"Invalid token": "Invalid token",
 	"Email already exist": "Email already exist",
-	"Undefined error": "Undefined error"
+	"Undefined error": "Undefined error",
+	"Name mandatory": "Name mandatory",
+	"Email mandatory": "Email mandatory",
+	"Wrong email": "Wrong email",
+	"Password mandatory": "Password mandatory",
+	"Type mandatory": "Type mandatory",
+	"Price mandatory": "Price mandatory"
 }

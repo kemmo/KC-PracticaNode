@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 
 const availableTags = ['work', 'lifestyle', 'motor', 'mobile'];
 
-//TODO: i18n to error messages
 const anuncioSchema = mongoose.Schema({
     nombre: {
         type: String,
@@ -14,7 +13,7 @@ const anuncioSchema = mongoose.Schema({
     venta: {
         type: Boolean,
         index: true,
-        required: [true, 'Venta mandatory']
+        required: [true, 'Type mandatory']
     },
     precio: {
         type: Number,

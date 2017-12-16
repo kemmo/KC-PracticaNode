@@ -2,7 +2,6 @@
 
 const mongoose = require('mongoose');
 
-//TODO: i18n to error messages
 const usuarioSchema = mongoose.Schema({
     nombre: {
         type: String,

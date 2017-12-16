@@ -4,5 +4,11 @@
 	"No token provided": "Token no encontrado",
 	"Invalid token": "Token inválido",
 	"Email already exist": "El email ya existe",
-	"Undefined error": "Error indefinido"
+	"Undefined error": "Error indefinido",
+	"Name mandatory": "El nombre es obligatorio",
+	"Email mandatory": "El email es obligatorio",
+	"Wrong email": "Email incorrecto",
+	"Password mandatory": "La clave es obligatoria",
+	"Type mandatory": "El tipo de anuncio es obligatorio",
+	"Price mandatory": "El precio es obligatorio"
 }
