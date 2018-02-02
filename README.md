@@ -1,8 +1,16 @@
 # Keepcoding Boot VI (2017)
 
-## Práctica JS/Node.js/MongoDB
+##  _Nodepop_
 
-###  _Nodepop_
+#### _API Usage_
+
+* Url of _Nodepop_ API:
+[http://ec2-18-218-171-78.us-east-2.compute.amazonaws.com/]
+
+* Url of personal page:
+[http://18.218.171.78/]
+
+#### _How To Install_
 
 Steps to download and run the application:
 
@@ -73,3 +81,5 @@ NOTES: Only auth users can retrieve the list of ads.
 GET /apiv1/anuncios/tags
 ````
 
+[http://ec2-18-218-171-78.us-east-2.compute.amazonaws.com/]: http://ec2-18-218-171-78.us-east-2.compute.amazonaws.com/
+[http://18.218.171.78/]: http://18.218.171.78/
