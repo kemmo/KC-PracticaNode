@@ -2,7 +2,7 @@
 
 ##  _Nodepop_
 
-#### _API Usage_
+#### _Useful URLs_
 
 * Url of _Nodepop_ API:
 [http://ec2-18-218-171-78.us-east-2.compute.amazonaws.com/]
